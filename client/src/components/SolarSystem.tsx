@@ -108,7 +108,12 @@ export default function SolarSystem({
     controlsRef.current = controls;
 
     const textureLoader = new THREE.TextureLoader();
-    const totalTextures = PLANETS.length + 3;
+    const totalTextures = PLANETS.reduce((acc, planet) => {
+      let count = 1; // Main texture
+      if (planet.cloudsUrl) count++;
+      if (planet.ringTexture && planet.ringInner && planet.ringOuter) count++;
+      return acc + count;
+    }, 0) + 1; // +1 for Sun
     let loadedTextures = 0;
 
     const loadTexture = (url: string): Promise<THREE.Texture> => {
