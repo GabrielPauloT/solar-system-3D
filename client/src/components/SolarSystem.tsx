@@ -523,11 +523,13 @@ export default function SolarSystem({
             planet.clouds.rotation.y += planet.data.rotationSpeed * 1.1;
           }
 
-          // Hide labels of other planets when focused
+          // Hide/Show labels based on focus state
           if (planet.label) {
+            // If any planet is focused, hide ALL 3D labels (to show only the HTML overlay title)
             if (focusedPlanetRef.current) {
-              planet.label.visible = isFocused;
+              planet.label.visible = false;
             } else {
+              // Overview mode: show all labels
               planet.label.visible = true;
             }
           }
